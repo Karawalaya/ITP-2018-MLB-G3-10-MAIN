@@ -1,0 +1,30 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Sampath Web Portal - ITP-2018-MLB-G3-10</display-name>
+  <servlet>
+  	<servlet-name>EmployeeRecruitment</servlet-name>
+  	<display-name>EmployeeRecruitment</display-name>
+  	<description>Human Resource Recruitment officer recuits new employees</description>
+  	<servlet-class>controller_servlet.employee_hr_payroll_management.recruitment_officer.EmployeeRecruitment</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Initializer</servlet-name>
+  	<display-name>Initializer</display-name>
+  	<description>This will initialize the database values OR not</description>
+  	<servlet-class>controller_servlet.Initializer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>EmployeeRecruitment</servlet-name>
+  	<url-pattern>/EmployeeRecruitment</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Initializer</servlet-name>
+  	<url-pattern>/InitializerController</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+  	<welcome-file>UM_Homepage_Common.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

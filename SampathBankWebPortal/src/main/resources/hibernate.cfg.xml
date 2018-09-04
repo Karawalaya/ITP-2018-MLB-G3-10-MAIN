@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+
+		<!--  Database Connection settings -->
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/sampath_web_portal_itp_2018_mlb_g3_10</property>
+        <property name="connection.username">ITP</property>
+        <property name="connection.password">thisstuff</property>
+
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">2</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- // -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+		<!-- <property name="hibernate.search.default.directory_provider">filesystem</property>
+		<property name="hibernate.search.default.indexBase">target/indexes</property>
+		<mapping class="org.hibernate.search.test.spatial.POI"/> -->
+		
+		<!--  Names the annotated entity class -->
+		<mapping class="pojo_model.user_management.Person"/>
+		<mapping class="pojo_model.employee_hr_payroll_management.Employee"/>
+		<mapping class="pojo_model.user_management.Gender"/>
+		<mapping class="pojo_model.user_management.Nationality"/>
+		<mapping class="pojo_model.user_management.Role"/>
+		<mapping class="pojo_model.user_management.Permission"/>
+		<mapping class="pojo_model.user_management.OnlineSecurityKey"/> 
+		<mapping class="pojo_model.employee_hr_payroll_management.NormalEmployee"/> 
+		<mapping class="pojo_model.employee_hr_payroll_management.Department"/>
+		<mapping class="pojo_model.employee_hr_payroll_management.Branch"/>
+		 
+	</session-factory>
+</hibernate-configuration>
