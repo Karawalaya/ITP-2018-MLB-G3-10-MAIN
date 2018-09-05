@@ -15,7 +15,6 @@ import pojo_model.employee_hr_payroll_management.Employee;
 import pojo_model.employee_hr_payroll_management.NormalEmployee;
 
 public class main {
-
 	public static void main(String[] args) {
 		Gender male = new Gender("male");
 		Gender female = new Gender("female");

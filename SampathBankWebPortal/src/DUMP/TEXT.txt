@@ -1,0 +1,15 @@
+/*	@AttributeOverrides({
+        @AttributeOverride(name = "firstName", column = @Column(name = "firstName")),
+        @AttributeOverride(name = "middleName", column = @Column(name = "middleName")),
+        @AttributeOverride(name = "lastName", column = @Column(name = "lastName")),
+        @AttributeOverride(name = "otherNames", column = @Column(name = "otherNames")),
+	})*/
+	
+/*	@AttributeOverrides({
+        @AttributeOverride(name = "addStreet01", column = @Column(name = "addressStreet01")),
+        @AttributeOverride(name = "addStreet02", column = @Column(name = "addressStreet02")),
+        @AttributeOverride(name = "addCity", column = @Column(name = "addressCity")),
+        @AttributeOverride(name = "addProvince", column = @Column(name = "addressProvince")),
+        @AttributeOverride(name = "zipCode", column = @Column(name = "addressZipCode")),
+	})*/
+	

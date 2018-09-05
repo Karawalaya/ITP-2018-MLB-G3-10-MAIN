@@ -1,12 +1,17 @@
 package pojo_model.user_management;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Name {
+	@Column(length = 50, nullable = false)
 	private String firstName;
+	@Column(length = 50)
 	private String middleName;
+	@Column(length = 50, nullable = false)
 	private String lastName;
+	@Column(length = 50)
 	private String otherNames;
 	
 	public Name() {}

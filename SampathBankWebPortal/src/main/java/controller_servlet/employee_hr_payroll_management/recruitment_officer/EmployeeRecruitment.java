@@ -40,6 +40,7 @@ public class EmployeeRecruitment extends HttpServlet {
 		String empDepartment = request.getParameter("empDepartment");
 		String empDesignation = request.getParameter("empDesignation");
 		String empRole = request.getParameter("empRole");
+		String empPhyRegDate = request.getParameter("empPhyRegDate");
 		
 		//Testing......
 		boolean validated = false;
@@ -47,6 +48,8 @@ public class EmployeeRecruitment extends HttpServlet {
 			validated = new Validator().validateEmployeeRegistration(empFirstName, empMiddleName, empLastName, empOtherNames, empGender, empAddLine01, 
 					empAddLine02, empAddCity, empAddProvince, empAddZip, empHomeContact, empMobileContact, empPersonalEmail, empNic, empNationality, empDob, empBranch, 
 					empDepartment, empDesignation, empRole);
+			
+			
 		} catch (EmployeeRegistrationException e) {
 			System.out.println(e.getDescription());
 			PrintWriter out = response.getWriter();
@@ -57,9 +60,5 @@ public class EmployeeRecruitment extends HttpServlet {
 			   out.println("</script>");
 		}
 		System.out.println(validated);
-		
-//		Employee employee = new Employee(empFirstName, empMiddleName, empLastName, empOtherNames, empAddLine01, empAddLine02, empAddCity, 
-//				empAddProvince, Integer.parseInt(empAddZip.trim()), empPersonalEmail, empHomeContact, empMobileContact, empGender, empNic, empNationality, 
-//				empDob, empRole, empBranch, empDepartment, empDesignation);
 	}
 }

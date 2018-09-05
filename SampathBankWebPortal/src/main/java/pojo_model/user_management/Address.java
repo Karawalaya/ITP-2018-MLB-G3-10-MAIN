@@ -1,13 +1,19 @@
 package pojo_model.user_management;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+	@Column(length = 100, nullable = false)
 	private String addressStreet01;
+	@Column(length = 100)
 	private String addressStreet02;
+	@Column(length = 100, nullable = false)
 	private String addressCity;
+	@Column(length = 100, nullable = false)
 	private String addressProvince;
+	@Column(length = 100, nullable = false)
 	private int addressZipCode;
 	
 	public Address() {}
