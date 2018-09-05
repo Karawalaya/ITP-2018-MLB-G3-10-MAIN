@@ -16,6 +16,12 @@
   	<description>This will initialize the database values OR not</description>
   	<servlet-class>controller_servlet.Initializer</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>LoginController</servlet-name>
+  	<display-name>LoginController</display-name>
+  	<description></description>
+  	<servlet-class>controller_servlet.user_management.LoginController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>EmployeeRecruitment</servlet-name>
   	<url-pattern>/EmployeeRecruitment</url-pattern>
@@ -23,6 +29,10 @@
   <servlet-mapping>
   	<servlet-name>Initializer</servlet-name>
   	<url-pattern>/InitializerController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginController</servlet-name>
+  	<url-pattern>/LoginController</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
   	<welcome-file>UM_Homepage_Common.jsp</welcome-file>

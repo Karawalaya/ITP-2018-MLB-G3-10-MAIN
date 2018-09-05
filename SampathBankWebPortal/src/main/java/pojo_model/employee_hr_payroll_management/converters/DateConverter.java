@@ -23,4 +23,17 @@ public class DateConverter {
 		
 		return i;
 	}
+	
+	public java.util.Date getJavaDate(String date) {
+		java.util.Date date1 = null;
+		try {
+			date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+		} catch (Exception e) {
+			System.out.println("Date stuff wrong...");
+			e.printStackTrace();
+		}
+		//Date date01 = new java.sql.Date(date1.getTime());
+		
+		return date1;
+	}
 }

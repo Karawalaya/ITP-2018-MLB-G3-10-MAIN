@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pojo_model.employee_hr_payroll_management.NormalEmployee;
 import pojo_model.employee_hr_payroll_management.Validator.Validator;
 import pojo_model.employee_hr_payroll_management.exceptions.EmployeeRegistrationException;
 
@@ -24,24 +25,26 @@ public class EmployeeRecruitment extends HttpServlet {
 		String empMiddleName = request.getParameter("empMiddletName");
 		String empLastName = request.getParameter("empLastName");
 		String empOtherNames = request.getParameter("empOtherNames");
-		String empGender = request.getParameter("empGender");
 		String empAddLine01 = request.getParameter("empAddLine01");
 		String empAddLine02 = request.getParameter("empAddLine02");
 		String empAddCity = request.getParameter("empAddCity");
 		String empAddProvince = request.getParameter("empAddProvince");
 		String empAddZip = request.getParameter("empAddZip");
+		String empNic = request.getParameter("empNic");
+		String empDob = request.getParameter("empDob");
+		String empPhyRegDate = request.getParameter("empPhyRegDate");
+		
 		String empHomeContact = request.getParameter("empHomeContact");
 		String empMobileContact = request.getParameter("empMobileContact");
 		String empPersonalEmail = request.getParameter("empPersonalEmail");
-		String empNic = request.getParameter("empNic");
+		String empGender = request.getParameter("empGender");
 		String empNationality = request.getParameter("empNationality");
-		String empDob = request.getParameter("empDob");
-		String empBranch = request.getParameter("empBranch");
-		String empDepartment = request.getParameter("empDepartment");
-		String empDesignation = request.getParameter("empDesignation");
-		String empRole = request.getParameter("empRole");
-		String empPhyRegDate = request.getParameter("empPhyRegDate");
 		
+		String empBranch = request.getParameter("empBranch");
+		String empDesignation = request.getParameter("empDesignation");
+		String empDepartment = request.getParameter("empDepartment");
+//		String empRole = request.getParameter("empRole");
+		String empRole = null;
 		//Testing......
 		boolean validated = false;
 		try {
@@ -49,6 +52,7 @@ public class EmployeeRecruitment extends HttpServlet {
 					empAddLine02, empAddCity, empAddProvince, empAddZip, empHomeContact, empMobileContact, empPersonalEmail, empNic, empNationality, empDob, empBranch, 
 					empDepartment, empDesignation, empRole);
 			
+//			NormalEmployee normalEmp = new NormalEmployee("");
 			
 		} catch (EmployeeRegistrationException e) {
 			System.out.println(e.getDescription());

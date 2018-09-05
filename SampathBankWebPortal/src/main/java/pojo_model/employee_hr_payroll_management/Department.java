@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,31 +22,44 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table (name="department")
 public class Department {
-	@Id
-	private String departmentId;
+	@Id @GeneratedValue
+	private int departmentId;
+	@Column(nullable = false)
 	private String departmentName;
+	@Column(length = 10, nullable = false, unique=true)
+	private String contactNumber;
 	@ManyToOne
 	@JoinColumn(name="branchId")
 	private Branch branch;
 	@OneToMany(mappedBy="department")
 	private Collection<Employee> employeeList = new ArrayList<Employee> ();
-	@ElementCollection(fetch=FetchType.EAGER)
-	@JoinTable (name="department_contact",
-				joinColumns = @JoinColumn(name = "departmentId"))
-	@GenericGenerator(name = "id_generator_department_contact", strategy="sequence")
-	@CollectionId(columns = { @Column(name="department_contactId")}, generator = "id_generator_department_contact", type = @Type(type="long"))
-	private Collection<String> contactNumberList = new ArrayList<String> ();
 
 	public Department() {}
 	
-	public Department(String departmentId, String departmentName, Branch branch, String contactNumber01, String contactNumber02) {
-		this.setDepartmentId(departmentId);
+	public Department(String departmentName, String contactNumber, Branch branch) {
 		this.setBranch(branch);
+		this.setContactNumber(contactNumber);
 		this.setDepartmentName(departmentName);
-		this.setContactNumber(contactNumber01, contactNumber02);
 	}
 
-	public void setDepartmentId(String departmentId) {
+	
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public Collection<Employee> getEmployeeList() {
+		return employeeList;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public void setEmployeeList(Collection<Employee> employeeList) {
+		this.employeeList = employeeList;
+	}
+
+	public void setDepartmentId(int departmentId) {
 		this.departmentId = departmentId;
 	}
 
@@ -60,20 +74,7 @@ public class Department {
 		this.departmentName = departmentName;
 	}
 	
-	public void setContactNumberList(Collection<String> contactNumberList) {
-		this.contactNumberList = contactNumberList;
-	}
-	
-	public void insertContactNumberList(String contactNumber) {
-		this.contactNumberList.add(contactNumber);
-	}
-	
-	public void setContactNumber(String contactNumber01, String contactNumber02) {
-		this.insertContactNumberList(contactNumber01);
-		this.insertContactNumberList(contactNumber02);
-	}
-	
-	public String getDepartmentId() {
+	public int getDepartmentId() {
 		return departmentId;
 	}
 	
@@ -83,9 +84,5 @@ public class Department {
 	
 	public String getDepartmentName() {
 		return departmentName;
-	}
-	
-	public Collection<String> getContactNumberList() {
-		return contactNumberList;
 	}
 }

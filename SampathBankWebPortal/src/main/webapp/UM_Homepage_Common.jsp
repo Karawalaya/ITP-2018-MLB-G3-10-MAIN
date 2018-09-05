@@ -154,12 +154,16 @@
         
         
         
+        <form action="/SampathBankWebPortal/LoginController" method="post">
+        	<input type="text" name="username"/>
+        	<input type="password" name="password"/>
+        	<input type="submit"/>
+        </form>
         
         
         
         
-        
-                </div>
+		</div>
 
         <!-- Footer -->
         <footer class="page-footer font-small blue pt-4 footer-all">

@@ -22,7 +22,7 @@ public class Address {
 		this.setAddressStreet01(addressStreet01);
 		
 		if(addressStreet02 == null || addressStreet02.trim().length() == 0)
-			this.setAddressStreet02(null);
+			this.setAddressStreet02(" ");
 		else
 			this.setAddressStreet02(addressStreet02);
 		

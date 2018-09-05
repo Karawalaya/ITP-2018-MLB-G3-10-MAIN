@@ -27,6 +27,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import pojo_model.employee_hr_payroll_management.Branch;
+import pojo_model.employee_hr_payroll_management.converters.DateConverter;
 
 @Entity
 @Table( name = "person",
@@ -40,115 +41,134 @@ public abstract class Person {
 	private Name name;
 	@Embedded
 	private Address address;
+	@Column(length = 10, nullable = false)
+	private String nic;
+	@Column (name="dateOfBirth", nullable=false)
+	@Temporal (TemporalType.DATE)
+	private Date dateOfBirth;
 	@Embedded
 	private RegistrationDates registrationDates;
+	@Column(length = 10, nullable = false)
+	private String homeContact;
+	@Column(length = 10)
+	private String mobileContact;
 	@Column(length = 100, nullable = false)
 	private String personalEmail;
 	@ManyToOne
 	@JoinColumn (name = "genderId", nullable = false)
 	private Gender gender; //Entity
-	@Column(length = 10, nullable = false)
-	private String nic;
 	@ManyToOne
 	@JoinColumn (name = "nationalityId", nullable = false)
-	@Column(length = 100)
 	private Nationality nationality; //Entity
-	@Column (name="dateOfBirth", nullable=false)
-	@Temporal (TemporalType.DATE)
-	private Date dateOfBirth;
-	@ManyToOne
-	@JoinColumn (name = "roleId", nullable = false)
-	private Role role; //Entity
 	@ManyToOne
 	@JoinColumn (name = "permissionId", nullable=false)
 	private Permission permission; //Entity
 	@OneToOne
-	@JoinColumn(name="onlineSecurityKey", nullable = false)
+	@JoinColumn(name="onlineSecurityId", nullable = false)
 	private OnlineSecurityKey onlineSecurityKey;
 	@ManyToOne
 	@JoinColumn(name="branchId", nullable = false)
 	private Branch branch;
-	@ElementCollection(fetch=FetchType.EAGER)
-	@JoinTable (name="person_contact",
-				joinColumns = @JoinColumn(name = "personId"))
-	@GenericGenerator(name = "id_generator_person_contact", strategy="sequence")
-	@CollectionId(columns = { @Column(name="person_contactId")}, generator = "id_generator_person_contact", type = @Type(type="int"))
-	private Collection<ContactNumber> contactNumberList = new ArrayList<ContactNumber>(); //Entity?
+//	@ElementCollection(fetch=FetchType.EAGER)
+//	@JoinTable (name="person_contact",
+//				joinColumns = @JoinColumn(name = "personId"))
+//	@GenericGenerator(name = "id_generator_person_contact", strategy="sequence")
+//	@CollectionId(columns = { @Column(name="person_contactId")}, generator = "id_generator_person_contact", type = @Type(type="int"))
+//	private Collection<ContactNumber> contactNumberList = new ArrayList<ContactNumber>(); //Entity?
+
 
 	//Default Constructor
 	public Person() {}
 	
 	//First overloaded constructor
-	public Person(int personId, Name name, Address address, RegistrationDates registrationDates, String personalEmail, Gender gender, 
-			Nationality nationality, Date dateOfBirth, Role role, Permission permission, OnlineSecurityKey onlineSecurityKey, 
+	//All attributes are initialized here
+	public Person(int personId, Name name, Address address, String nic, Date dateOfBirth,
+			RegistrationDates registrationDates, String homeContact, String mobileContact, String personalEmail,
+			Gender gender, Nationality nationality, Permission permission, OnlineSecurityKey onlineSecurityKey,
 			Branch branch) {
+
 		this.setPersonId(personId);
 		this.setName(name);
 		this.setAddress(address);
+		this.setNic(nic);
+		this.setDateOfBirth(dateOfBirth);
 		this.setRegistrationDates(registrationDates);
+		this.setHomeContact(homeContact);
+		this.setMobileContact(mobileContact);
 		this.setPersonalEmail(personalEmail);
 		this.setGender(gender);
 		this.setNationality(nationality);
-		this.setDateOfBirth(dateOfBirth);
-		this.setRole(role);
 		this.setPermission(permission);
 		this.setOnlineSecurityKey(onlineSecurityKey);
 		this.setBranch(branch);
 	}
 	
-	//Secopnd overloaded constructor
-/*	public Person() {
+	//Second overloaded constructor
+	public Person(String firstName, String middleName, String lastName, String otherNames, String addStreet01,
+			String addStreet02, String addCity, String addProvince, String zipCode, String nic, String dateOfBirth,
+			String phyRegDate, String onlineRegDate, String homeContact, String mobileContact, String personalEmail,
+			Gender gender, Nationality nationality, Permission permission, OnlineSecurityKey onlineSecurityKey,
+			Branch branch) {
+		this.setName(firstName, middleName, lastName, otherNames);
+		this.setAddress(addStreet01, addStreet02, addCity, addProvince, Integer.parseInt(zipCode));
+		this.setNic(nic);
+		DateConverter dc = new DateConverter();
+		this.setDateOfBirth(dc.getJavaDate(dateOfBirth));
+		if(onlineRegDate == null || onlineRegDate.trim().length() == 0)
+			this.setRegistrationDates(dc.getJavaDate(phyRegDate), dc.getJavaDate("0000-00-00"));
+		else
+			this.setRegistrationDates(dc.getJavaDate(phyRegDate), dc.getJavaDate(onlineRegDate));
 		
-	}*/
+		this.setHomeContact(homeContact);
+		this.setMobileContact(mobileContact);
+		this.setPersonalEmail(personalEmail);
+		this.setGender(gender);
+		this.setNationality(nationality);
+		this.setPermission(permission);
+		this.setOnlineSecurityKey(onlineSecurityKey);
+		this.setBranch(branch);
+	}
 	
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
-	
+
 	public int getPersonId() {
 		return personId;
+	}
+
+	public void setName(Name name) {
+		this.name = name;
+	}
+	
+	public Name getName() {
+		return this.name;
 	}
 
 	public void setName(String firstName, String middleName, String lastName, String otherNames) {
 		this.setName(new Name(firstName, middleName, lastName, otherNames));
 	}
 	
-	public void setName(Name name) {
-		this.name = name;
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	public Address getAddress() {
+		return this.address;
 	}
 	
 	public void setAddress(String addStreet01, String addStreet02, String addCity, String addProvince, int zipCode) {
 		this.setAddress(new Address(addStreet01, addStreet02, addCity, addProvince, zipCode));
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	
-	public void setRegistrationDates( Date phyRegDate, Date onlineRegDate) {
-		this.setRegistrationDates(new RegistrationDates(phyRegDate, onlineRegDate));
-	}
-	
-	public void setRegistrationDates(RegistrationDates registrationDates) {
-		this.registrationDates = registrationDates;
-	}
-	
-	public void setPersonalEmail(String personalEmail) {
-		this.personalEmail = personalEmail;
-	}
-	
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
 	public void setNic(String nic) {
 		this.nic = nic.trim();
 	}
 	
-	public void setNationality(Nationality nationality) {
-		this.nationality = nationality;
+	public String getNic() {
+		return this.nic;
 	}
-
+	
 	public void setDateOfBirth(Date dateOfBirth) {
 //		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 //		Date myDate = formatter.parse(dateOfBirth);
@@ -156,20 +176,99 @@ public abstract class Person {
 
 		this.dateOfBirth = dateOfBirth;
 	}
-
-	public void setRole(Role role) {
-		this.role = role;
+	
+	public Date getDateOfBirth() {
+		return this.dateOfBirth;
+	}
+	
+	public void setRegistrationDates(RegistrationDates registrationDates) {
+		this.registrationDates = registrationDates;
+	}
+	
+	public RegistrationDates getRegistrationDates() {
+		return this.registrationDates;
+	}
+	
+	public void setRegistrationDates(Date phyRegDate, Date onlineRegDate) {
+		this.setRegistrationDates(new RegistrationDates(phyRegDate, onlineRegDate));
+	}	
+	
+	public void setHomeContact(String homeContact) {
+		this.homeContact = homeContact;
+	}
+	
+	public String getHomeContact() {
+		return homeContact;
+	}
+	
+	public void setMobileContact(String mobileContact) {
+		this.mobileContact = mobileContact;
+	}
+	
+	public String getMobileContact() {
+		return mobileContact;
 	}
 
+	public void setPersonalEmail(String personalEmail) {
+		if(personalEmail == null || personalEmail.trim().length() == 0)
+			this.personalEmail = null;
+		else
+			this.personalEmail = personalEmail;
+	}
+
+	public String getPersonalEmail() {
+		return this.personalEmail;
+	}
+	
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+	
+	public Gender getGender() {
+		return this.gender;
+	}
+	
+	public void setNationality(Nationality nationality) {
+		this.nationality = nationality;
+	}
+	
+	public Nationality getNationality() {
+		return this.nationality;
+	}
+	
 	public void setPermission(Permission permission) {
 		this.permission = permission;
 	}
 	
-	public void setContactNumberList(Collection<ContactNumber> contactNumberList) {
-		this.contactNumberList = contactNumberList;
+	public Permission getPermission() {
+		return this.permission;
 	}
 	
-	public void setContactNumber(String contactNumberHome, String contactNumberMobile) {
+	public void setOnlineSecurityKey(OnlineSecurityKey onlineSecurityKey) {
+		this.onlineSecurityKey = onlineSecurityKey;
+	}
+
+	public OnlineSecurityKey getOnlineSecurityKey() {
+		return onlineSecurityKey;
+	}
+	
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+	
+	public Branch getBranch() {
+		return branch;
+	}
+	
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
+	
+//	public void setContactNumberList(Collection<ContactNumber> contactNumberList) {
+//		this.contactNumberList = contactNumberList;
+//	}
+	
+//	public void setContactNumber(String contactNumberHome, String contactNumberMobile) {
 //		boolean x = true;
 //		String y = contactNumber1;
 //		int i = 1; //Integer.parseInt(y.substring(13));
@@ -183,80 +282,28 @@ public abstract class Person {
 //			i += 1;
 //		}
 		
-		ContactNumber contactNumber = null;
-		String number = contactNumberHome;
-		String type = "Home";
-		for(int i = 0; i < 2; i++) {
-			if(number != null && number.trim().length() > 0) {
-				contactNumber = new ContactNumber(number, type);
-				this.insertContactNumberList(contactNumber);
-			}
-			number = contactNumberMobile;
-			type="Mobile";
-		}	
-	}
+//		ContactNumber contactNumber = null;
+//		String number = contactNumberHome;
+//		String type = "Home";
+//		for(int i = 0; i < 2; i++) {
+//			if(number != null && number.trim().length() > 0) {
+//				contactNumber = new ContactNumber(number, type);
+//				this.insertContactNumberList(contactNumber);
+//			}
+//			number = contactNumberMobile;
+//			type="Mobile";
+//		}	
+//	}
 	
-	public void insertContactNumberList(ContactNumber contactNumber) {
-		this.contactNumberList.add(contactNumber);
-	}
+//	public void insertContactNumberList(ContactNumber contactNumber) {
+//		this.contactNumberList.add(contactNumber);
+//	}
 
-	public void setOnlineSecurityKey(OnlineSecurityKey onlineSecurityKey) {
-		this.onlineSecurityKey = onlineSecurityKey;
-	}
+//	public Role getRole() {
+//		return this.role;
+//	}
 
-	public void setBranch(Branch branch) {
-		this.branch = branch;
-	}
-
-	public Name getName() {
-		return this.name;
-	}
-
-	public Address getAddress() {
-		return this.address;
-	}
-
-	public RegistrationDates getRegistrationDates() {
-		return this.registrationDates;
-	}
-
-	public Gender getGender() {
-		return this.gender;
-	}
-
-	public String getNic() {
-		return this.nic;
-	}
-
-	public Nationality getNationality() {
-		return this.nationality;
-	}
-
-	public Date getDateOfBirth() {
-		return this.dateOfBirth;
-	}
-
-	public Role getRole() {
-		return this.role;
-	}
-
-	public Permission getPermission() {
-		return this.permission;
-	}
-
-	public String getPersonalEmail() {
-		return this.personalEmail;
-	}
-	
-	public Collection<ContactNumber> getContactNumberList() {
-		return this.contactNumberList;
-	}
-	
-	public OnlineSecurityKey getOnlineSecurityKey() {
-		return onlineSecurityKey;
-	}
-	
-	public Branch getBranch() {
-		return branch;
-	}
+//	public Collection<ContactNumber> getContactNumberList() {
+//		return this.contactNumberList;
+//	}
 }

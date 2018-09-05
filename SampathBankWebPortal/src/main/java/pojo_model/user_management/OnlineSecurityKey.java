@@ -1,5 +1,6 @@
 package pojo_model.user_management;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,12 +11,12 @@ import javax.persistence.Table;
 public class OnlineSecurityKey {
 	@Id @GeneratedValue
 	private int onlineSecurityId;
+	@Column(length = 10, nullable = false)
 	private String onlineSecurityKey;
 
 	public OnlineSecurityKey() {}
 	
-	public OnlineSecurityKey(int onlineSecurityId, String onlineSecurityKey) {
-		this.setOnlineSecurityId(onlineSecurityId);
+	public OnlineSecurityKey(String onlineSecurityKey) {
 		this.setOnlineSecurityKey(onlineSecurityKey);
 	}
 

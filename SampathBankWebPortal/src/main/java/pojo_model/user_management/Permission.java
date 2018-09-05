@@ -18,7 +18,7 @@ import javax.persistence.UniqueConstraint;
 @Table (name="permission",
 		uniqueConstraints = {@UniqueConstraint ( columnNames = "permissionType")})
 public class Permission {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id @GeneratedValue
 	private int permissionLevel;
 	@Column(nullable=false)
 	private String permissionType;

@@ -8,6 +8,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,40 +19,45 @@ import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
+import pojo_model.employee_hr_payroll_management.converters.DateConverter;
 import pojo_model.user_management.Address;
-import pojo_model.user_management.ContactNumber;
 import pojo_model.user_management.Person;
 
 @Entity
 @Table (name="branch")
 public class Branch {
-	@Id
-	private String branchId;
+	@Id @GeneratedValue
+	private int branchId;
 	@Embedded
 	private Address address;
+	@Column(length = 100, nullable = false)
 	private String branchEmail;
-	@ElementCollection(fetch=FetchType.EAGER)
-	@JoinTable (name="branch_contact",
-				joinColumns = @JoinColumn(name = "branchId"))
-	@GenericGenerator(name = "id_generator_branch_contact", strategy="sequence")
-	@CollectionId(columns = { @Column(name="branch_contactId")}, generator = "id_generator_branch_contact", type = @Type(type="long"))
-	private Collection<String> contactNumberList = new ArrayList<String> ();
+	@Column(length = 10, nullable = false)
+	private String contactNumber;
 	@OneToMany(mappedBy = "branch")
-	private Collection<Person> person = new ArrayList<Person> ();
+	private Collection<Person> personList = new ArrayList<Person> ();
 	@OneToMany(mappedBy = "branch")
-	private Collection<Department> department = new ArrayList<Department> ();
+	private Collection<Department> departmentList = new ArrayList<Department> ();
 
 	public Branch() {}
 	
-	public Branch(String branchId, String addStreet01, String addStreet02,  String addCity, String addProvince, int zipCode, String branchEmail, 
-			String contactNumber01, String contactNumber02) {
-		this.setBranchId(branchId);
-		this.setBranchAddress(addStreet01, addStreet02, addCity, addProvince, zipCode);
+	public Branch(String addStreet01, String addStreet02,  String addCity, String addProvince, String zipCode, String branchEmail, 
+			String contactNumber) {
+		DateConverter dc = new DateConverter();
+		this.setBranchAddress(addStreet01, addStreet02, addCity, addProvince, dc.getIntFromString(zipCode));
 		this.setBranchEmail(branchEmail);
-		this.setContactNumber(contactNumber01, contactNumber02);
+		this.setContactNumber(contactNumber);
 	}
 
-	public String getBranchId() {
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public int getBranchId() {
 		return branchId;
 	}
 
@@ -64,18 +70,14 @@ public class Branch {
 	}
 
 	public Collection<Person> getPerson() {
-		return person;
+		return personList;
 	}
 
 	public Collection<Department> getDepartment() {
-		return department;
+		return departmentList;
 	}
 
-	public Collection<String> getContactNumberList() {
-		return contactNumberList;
-	}
-
-	public void setBranchId(String branchId) {
+	public void setBranchId(int branchId) {
 		this.branchId = branchId;
 	}
 
@@ -91,24 +93,19 @@ public class Branch {
 		this.branchEmail = branchEmail;
 	}
 
-	public void setPerson(Collection<Person> person) {
-		this.person = person;
+	public Collection<Person> getPersonList() {
+		return personList;
 	}
 
-	public void setDepartment(Collection<Department> department) {
-		this.department = department;
+	public Collection<Department> getDepartmentList() {
+		return departmentList;
 	}
 
-	public void setContactNumberList(Collection<String> contactNumberList) {
-		this.contactNumberList = contactNumberList;
+	public void setPersonList(Collection<Person> personList) {
+		this.personList = personList;
 	}
-	
-	public void insertContactNumberList(String contactNumber) {
-		this.contactNumberList.add(contactNumber);
-	}
-	
-	public void setContactNumber(String contactNumber01, String contactNumber02) {
-		this.insertContactNumberList(contactNumber01);
-		this.insertContactNumberList(contactNumber02);
+
+	public void setDepartmentList(Collection<Department> departmentList) {
+		this.departmentList = departmentList;
 	}
 }

@@ -27,7 +27,7 @@
         <property name="show_sql">true</property>
 
         <!-- // -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
 		<!-- <property name="hibernate.search.default.directory_provider">filesystem</property>
 		<property name="hibernate.search.default.indexBase">target/indexes</property>
@@ -36,14 +36,16 @@
 		<!--  Names the annotated entity class -->
 		<mapping class="pojo_model.user_management.Person"/>
 		<mapping class="pojo_model.employee_hr_payroll_management.Employee"/>
+		<mapping class="pojo_model.employee_hr_payroll_management.NormalEmployee"/>
+		<mapping class="pojo_model.employee_hr_payroll_management.Manager"/>
+		<mapping class="pojo_model.employee_hr_payroll_management.Head"/>
+		<mapping class="pojo_model.employee_hr_payroll_management.Admin"/>
 		<mapping class="pojo_model.user_management.Gender"/>
 		<mapping class="pojo_model.user_management.Nationality"/>
-		<mapping class="pojo_model.user_management.Role"/>
 		<mapping class="pojo_model.user_management.Permission"/>
-		<mapping class="pojo_model.user_management.OnlineSecurityKey"/> 
-		<mapping class="pojo_model.employee_hr_payroll_management.NormalEmployee"/> 
+		<mapping class="pojo_model.employee_hr_payroll_management.Designation"/>
 		<mapping class="pojo_model.employee_hr_payroll_management.Department"/>
 		<mapping class="pojo_model.employee_hr_payroll_management.Branch"/>
-		 
+		<mapping class="pojo_model.user_management.OnlineSecurityKey"/>
 	</session-factory>
 </hibernate-configuration>
