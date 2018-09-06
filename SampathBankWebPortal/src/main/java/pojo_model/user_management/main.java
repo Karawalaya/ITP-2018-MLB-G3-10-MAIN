@@ -60,6 +60,8 @@ public class main {
 				"Western", "10280", "961370213v", "1996-05-16", "2018-09-05", null, "011844830", "0772841580", "isurusamarasekara@gmail.com", 
 				male, sinhalese, medium, on, branch02, "karawalaya@gmail.com", desig05, dept05);
 		
+		OnlinePerson op01 = new OnlinePerson("Karawalaya", "yoYo", nrEmp01);
+		
 		Session session = HibernateUtil.openSession();
 		session.beginTransaction();
 		
@@ -94,7 +96,7 @@ public class main {
 		session.save(desig10);
 		session.save(on);
 		session.save(nrEmp01);
-		
+		session.save(op01);
 		
 		session.getTransaction().commit();
 		HibernateUtil.closeSession();

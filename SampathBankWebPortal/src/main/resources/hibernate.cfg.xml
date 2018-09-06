@@ -47,5 +47,6 @@
 		<mapping class="pojo_model.employee_hr_payroll_management.Department"/>
 		<mapping class="pojo_model.employee_hr_payroll_management.Branch"/>
 		<mapping class="pojo_model.user_management.OnlineSecurityKey"/>
+		<mapping class="pojo_model.user_management.OnlinePerson"/>
 	</session-factory>
 </hibernate-configuration>
